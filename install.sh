@@ -23,8 +23,8 @@ checkroot() {
 }
 
 apt_based() {
-    apt-get update
-    apt-get install python3 python3-pip php
+    apt-get update -y
+    apt-get install python3 python3-pip php -y
     if [ "$?" -ne 0 ]; then
         printf "${RED}An error occurred! seems apt-get doesn't work.\n${RST}"
         exit 1
@@ -88,14 +88,14 @@ if [ "$KERNEL" = "linux" ]; then
 
 elif [ "$KERNEL" = "freebsd" ]; then
     pkg update
-    pkg install python310 py310-pip php
+    pkg install python310 py310-pip php -y
     if [ "$?" -ne 0 ]; then
         printf "${RED}An error occurred! seems pkg doesn't work.\n${RST}"
         exit 1
     fi
 
 elif [ "$KERNEL" = "openbsd"  ]; then
-    pkg_add python py3-pip php
+    pkg_add python py3-pip php -y
     if [ "$?" -ne 0 ]; then
         printf "${RED}An error occurred! seems pkg_add doesn't work.\n${RST}"
         exit 1
@@ -108,14 +108,14 @@ elif [ "$KERNEL" = "darwin" ]; then
     printf "\n(1 or 2) ${GRY}#${RST} "
     read -r pm
     if [ "$pm" = "1" ]; then
-        port selfupdate
-        port install python38 py38-pip php
+        port selfupdate -y
+        port install python38 py38-pip php -y
         if [ "$?" -ne 0 ]; then
             printf "${RED}An error occurred! seems port doesn't work.\n${RST}"
             exit 1
         fi
 
-        python3.8 -m pip install -r ./requirements.txt
+        python3.8 -m pip install -r ./requirements.txt -y
         if [ "$?" -ne 0 ]; then
             printf "${RED}An error occurred! seems pip doesn't work.\n${RST}"
             exit 1
@@ -126,7 +126,7 @@ elif [ "$KERNEL" = "darwin" ]; then
         printf "\n(y or n) ${GRY}#${RST} "
         read -r op
         if [ "$op" = "y" ]; then
-            port select --set python3 python38
+            port select --set python3 python38 -y
             printf "${BLU}Reopen terminal emulator to apply changes\n${RST}"
             sleep 2
         elif [ "$op" = "n" ]; then
